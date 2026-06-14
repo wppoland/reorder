@@ -18,6 +18,4 @@ return [
     'statuses'         => ['completed'],
     // Where to send the customer after items are re-added: `cart` or `checkout`.
     'redirect'         => 'cart',
-    // Show the button on the single order (order-view) screen too.
-    'show_on_view'     => true,
 ];

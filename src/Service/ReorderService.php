@@ -8,7 +8,6 @@ defined('ABSPATH') || exit;
 
 use Reorder\Contract\HasHooks;
 use Reorder\Settings\SettingsRepository;
-use Reorder\Util\TemplateLoader;
 use WC_Order;
 use WC_Order_Item_Product;
 
@@ -27,7 +26,6 @@ final class ReorderService implements HasHooks
 
     public function __construct(
         private readonly SettingsRepository $settings,
-        private readonly TemplateLoader $templates,
     ) {
     }
 
@@ -36,16 +34,8 @@ final class ReorderService implements HasHooks
         // Button in the My Account → Orders list (one row per order).
         add_filter('woocommerce_my_account_my_orders_actions', [$this, 'addListAction'], 10, 2);
 
-        // Button on the single order (order-view) screen.
-        if ($this->settings->showOnView()) {
-            add_action('woocommerce_order_details_after_order_table', [$this, 'renderViewButton'], 10, 1);
-        }
-
         // Handle the reorder request early, before output, so we can redirect.
         add_action('template_redirect', [$this, 'handleRequest']);
-
-        // Front-end button styling (only enqueued where a button is shown).
-        add_action('wp_enqueue_scripts', [$this, 'registerAssets']);
     }
 
     /**
@@ -67,27 +57,6 @@ final class ReorderService implements HasHooks
         ];
 
         return $actions;
-    }
-
-    /**
-     * Renders the reorder button under the single order details table.
-     *
-     * @param WC_Order $order
-     */
-    public function renderViewButton($order): void
-    {
-        if (! $order instanceof WC_Order || ! $this->orderQualifies($order)) {
-            return;
-        }
-
-        wp_enqueue_style('reorder-front');
-
-        $html = $this->templates->render('reorder-button', [
-            'url'   => $this->reorderUrl($order),
-            'label' => $this->settings->buttonText(),
-        ]);
-
-        echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Template escapes its own output.
     }
 
     /**
@@ -127,21 +96,6 @@ final class ReorderService implements HasHooks
         /** @var WC_Order $order */
         $this->refill($order);
         $this->redirect($this->settings->redirectUrl());
-    }
-
-    /**
-     * Enqueues (registers) the small front-end stylesheet for the button.
-     */
-    public function registerAssets(): void
-    {
-        $plugin = \Reorder\Plugin::instance();
-
-        wp_register_style(
-            'reorder-front',
-            $plugin->url('assets/css/reorder.css'),
-            [],
-            \Reorder\VERSION,
-        );
     }
 
     /**
@@ -200,16 +154,6 @@ final class ReorderService implements HasHooks
         }
 
         $this->reportResult($added, $skipped);
-
-        /**
-         * Fires after an order's items have been re-added to the cart. PRO
-         * companions (e.g. reorder coupons) hook here.
-         *
-         * @param WC_Order     $order   The order that was reordered.
-         * @param int          $added   Number of items added to the cart.
-         * @param list<string> $skipped Names of items that were skipped.
-         */
-        do_action('reorder/refilled', $order, $added, $skipped);
     }
 
     /**

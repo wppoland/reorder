@@ -133,19 +133,6 @@ final class Settings implements HasHooks
                 'help' => __('The button only appears on orders with one of the ticked statuses. "Completed" is the usual choice; add "Processing" if you want customers to reorder before fulfilment.', 'reorder'),
             ],
         );
-
-        add_settings_field(
-            'show_on_view',
-            __('Single order screen', 'reorder'),
-            [$this, 'renderCheckbox'],
-            self::PAGE,
-            self::SECTION_DISPLAY,
-            [
-                'id'    => 'show_on_view',
-                'label' => __('Also show the button on the single order view.', 'reorder'),
-                'help'  => __('When on, the reorder button appears under the order details table when a customer opens an individual order, in addition to the Orders list.', 'reorder'),
-            ],
-        );
     }
 
     public function renderPage(): void
@@ -157,7 +144,7 @@ final class Settings implements HasHooks
         <div class="wrap reorder-admin">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
             <p class="reorder-admin__lead">
-                <?php esc_html_e('Add a one-click reorder button to past orders so customers can buy the same items again in seconds. Hover or focus the ? icons for guidance on each option.', 'reorder'); ?>
+                <?php esc_html_e('Add a one-click reorder button to past orders so customers can buy the same items again in seconds.', 'reorder'); ?>
             </p>
             <form method="post" action="options.php">
                 <?php
@@ -171,28 +158,15 @@ final class Settings implements HasHooks
     }
 
     /**
-     * Builds an accessible inline-help affordance: a "?" button whose tooltip
-     * text is wired to it via aria-describedby and exposed as role="tooltip".
+     * Renders a field's help text as a standard description paragraph.
      */
-    private function helpIcon(string $id, string $text): string
+    private function helpText(string $text): string
     {
         if ($text === '') {
             return '';
         }
 
-        $bubbleId = 'reorder-help-' . $id;
-
-        return sprintf(
-            '<button type="button" class="reorder-help" aria-describedby="%1$s" aria-expanded="false">'
-            . '<span aria-hidden="true">?</span>'
-            . '<span class="screen-reader-text">%2$s</span>'
-            . '<span class="reorder-help__bubble" id="%1$s" role="tooltip">%3$s</span>'
-            . '</button>',
-            esc_attr($bubbleId),
-            /* translators: accessible name for the inline-help button. */
-            esc_html__('More information', 'reorder'),
-            esc_html($text),
-        );
+        return sprintf('<p class="description">%s</p>', esc_html($text));
     }
 
     /**
@@ -213,27 +187,7 @@ final class Settings implements HasHooks
             esc_attr($placeholder),
         );
 
-        echo $this->helpIcon($id, $args['help'] ?? ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Pre-escaped by helpIcon().
-    }
-
-    /**
-     * @param array<string, string> $args
-     */
-    public function renderCheckbox(array $args): void
-    {
-        $id      = $args['id'] ?? '';
-        $checked = $this->settings->showOnView();
-        $label   = $args['label'] ?? '';
-
-        printf(
-            '<label for="%1$s"><input type="checkbox" id="%1$s" name="%2$s[%1$s]" value="1" %3$s /> %4$s</label>',
-            esc_attr($id),
-            esc_attr(SettingsRepository::OPTION),
-            checked($checked, true, false),
-            esc_html($label),
-        );
-
-        echo $this->helpIcon($id, $args['help'] ?? ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Pre-escaped by helpIcon().
+        echo $this->helpText($args['help'] ?? ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Pre-escaped by helpText().
     }
 
     /**
@@ -259,8 +213,8 @@ final class Settings implements HasHooks
                 esc_html($label),
             );
         }
-        echo $this->helpIcon($id, $args['help'] ?? ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Pre-escaped by helpIcon().
         echo '</fieldset>';
+        echo $this->helpText($args['help'] ?? ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Pre-escaped by helpText().
     }
 
     /**
@@ -284,8 +238,8 @@ final class Settings implements HasHooks
                 esc_html($label),
             );
         }
-        echo $this->helpIcon($id, $args['help'] ?? ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Pre-escaped by helpIcon().
         echo '</fieldset>';
+        echo $this->helpText($args['help'] ?? ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Pre-escaped by helpText().
     }
 
     /**
@@ -319,10 +273,9 @@ final class Settings implements HasHooks
         }
 
         return [
-            'button_text'  => sanitize_text_field((string) ($raw['button_text'] ?? '')),
-            'statuses'     => $statuses,
-            'redirect'     => $redirect,
-            'show_on_view' => ! empty($raw['show_on_view']),
+            'button_text' => sanitize_text_field((string) ($raw['button_text'] ?? '')),
+            'statuses'    => $statuses,
+            'redirect'    => $redirect,
         ];
     }
 }

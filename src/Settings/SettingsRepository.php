@@ -98,11 +98,6 @@ final class SettingsRepository
         return in_array($value, ['cart', 'checkout'], true) ? $value : 'cart';
     }
 
-    public function showOnView(): bool
-    {
-        return (bool) ($this->all()['show_on_view'] ?? true);
-    }
-
     /**
      * The resolved redirect URL for the configured target.
      */
@@ -110,14 +105,6 @@ final class SettingsRepository
     {
         $target = $this->redirect();
 
-        $url = $target === 'checkout' ? wc_get_checkout_url() : wc_get_cart_url();
-
-        /**
-         * Filter the URL the customer is redirected to after a reorder.
-         *
-         * @param string $url    Resolved redirect URL.
-         * @param string $target Configured target (`cart` or `checkout`).
-         */
-        return (string) apply_filters('reorder/redirect_url', $url, $target);
+        return $target === 'checkout' ? wc_get_checkout_url() : wc_get_cart_url();
     }
 }

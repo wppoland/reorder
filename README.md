@@ -5,7 +5,7 @@ can re-add every still-available item to the cart and check out again fast.
 
 ## Features
 
-- Adds a reorder button to each qualifying order in My Account → Orders, and optionally on the single order view.
+- Adds a reorder button to each qualifying order in My Account → Orders.
 - Re-adds every still-purchasable line item to the cart, preserving variations.
 - Skips items that are no longer available and tells the customer which ones, instead of breaking the cart.
 - Redirects to the cart or straight to checkout, your choice.

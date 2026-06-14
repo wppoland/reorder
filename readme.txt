@@ -13,7 +13,7 @@ One-click reorder for WooCommerce: add a Buy again button to past orders so cust
 
 == Description ==
 
-Reorder adds a one-click **"Order again"** button to each past order in WooCommerce **My Account → Orders** (and, optionally, on the single order view). Clicking it re-adds every still-purchasable item from that order to the cart and sends the customer to the cart or straight to checkout — turning a repeat purchase into a single tap.
+Reorder adds a one-click **"Order again"** button to each past order in WooCommerce **My Account → Orders**. Clicking it re-adds every still-purchasable item from that order to the cart and sends the customer to the cart or straight to checkout — turning a repeat purchase into a single tap.
 
 Anything no longer available (deleted, hidden, or out of stock) is skipped automatically, and the customer gets a clear notice listing what could not be re-added.
 
@@ -23,8 +23,7 @@ Anything no longer available (deleted, hidden, or out of stock) is skipped autom
 * **Safe by design.** Every reorder link is nonce-protected, and the handler verifies the current user actually owns the order before acting — no IDOR, no acting on someone else's order.
 * **Graceful with missing items.** Unavailable products are skipped with a friendly notice instead of breaking the cart.
 * **Variation aware.** Re-adds the exact variation (size, colour, etc.) that was originally ordered.
-* **No layout shift, no jQuery.** The button sits in the normal WooCommerce order actions; the single-order button is server-rendered.
-* **Accessible & polished.** Keyboard friendly, focus-visible styles, motion-safe, dark-mode-aware admin with inline help on every setting.
+* **No layout shift, no jQuery.** The button sits in the normal WooCommerce order actions.
 * **Configurable.** Choose the button label, which order statuses show the button, and whether to send shoppers to the cart or checkout.
 
 **Settings (WooCommerce → Reorder)**
@@ -32,7 +31,6 @@ Anything no longer available (deleted, hidden, or out of stock) is skipped autom
 * Button text
 * Which order statuses show the button (Completed, Processing, On hold)
 * Redirect target after reordering (cart or checkout)
-* Show the button on the single order view as well as the orders list
 
 == Installation ==
 
@@ -72,8 +70,7 @@ Reorder does not connect to any external services. It only re-adds items to the 
 == Screenshots ==
 
 1. The "Order again" button on the My Account orders list.
-2. The reorder button on the single order view.
-3. Settings page — button text, order statuses, and redirect target with inline help.
+2. Settings page — button text, order statuses, and redirect target.
 
 == Changelog ==
 

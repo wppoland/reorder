@@ -10,8 +10,8 @@ use Reorder\Contract\HasHooks;
 use Reorder\Plugin;
 
 /**
- * Enqueues the admin stylesheet and tooltip script, but only on Reorder's own
- * settings screen, so nothing leaks into the rest of wp-admin.
+ * Enqueues the admin stylesheet, but only on Reorder's own settings screen,
+ * so nothing leaks into the rest of wp-admin.
  */
 final class Assets implements HasHooks
 {
@@ -38,17 +38,6 @@ final class Assets implements HasHooks
             $plugin->url('assets/css/admin.css'),
             [],
             \Reorder\VERSION,
-        );
-
-        wp_enqueue_script(
-            self::HANDLE,
-            $plugin->url('assets/js/admin.js'),
-            [],
-            \Reorder\VERSION,
-            [
-                'in_footer' => true,
-                'strategy'  => 'defer',
-            ],
         );
     }
 }
