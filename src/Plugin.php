@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
 use Reorder\Contract\HasHooks;
 
 /**
- * Main plugin orchestrator: wires the DI container, runs migrations, and boots
+ * Main plugin class: wires the DI container, runs migrations, and boots
  * every HasHooks service listed in config/hooks.php.
  */
 final class Plugin
@@ -75,7 +75,7 @@ final class Plugin
         }
 
         /**
-         * Fires after the plugin has fully booted. PRO companions hook here.
+         * Fires after the plugin has fully booted. Add-ons can hook here.
          *
          * @param Plugin $plugin The booted plugin instance.
          */
