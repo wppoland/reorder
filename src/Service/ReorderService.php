@@ -154,6 +154,18 @@ final class ReorderService implements HasHooks
         }
 
         $this->reportResult($added, $skipped);
+
+        /**
+         * Fires after a reorder has re-added the order's items to the cart.
+         *
+         * Add-ons (e.g. Reorder Pro) hook this to react to a completed reorder —
+         * for example, applying a reward coupon to the cart.
+         *
+         * @param WC_Order     $order   The order that was reordered.
+         * @param int          $added   Number of line items added back to the cart.
+         * @param list<string> $skipped Names of items that could not be re-added.
+         */
+        do_action('reorder/refilled', $order, $added, $skipped);
     }
 
     /**
