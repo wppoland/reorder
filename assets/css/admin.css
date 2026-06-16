@@ -1,16 +1,26 @@
 /* ==========================================================================
    Reorder – Admin UI
-   Polishes the Settings screen: tidy sections, inline help tooltips, clear
-   choice groups. Themeable, dark-mode aware, motion-safe. Scoped to
+   Polishes the Settings screen: tidy sections, clear choice groups, and a live
+   preview of the storefront button so a merchant sees the effect of each
+   setting as they change it. Carries the family burnt-amber accent (matched to
+   the storefront button) on one restrained touch — the section heading rule —
+   and nowhere else. Themeable, dark-mode aware, motion-safe. Scoped to
    .reorder-admin so it never leaks into the rest of wp-admin.
+
+   Contrast (computed, WCAG 2.1):
+     accent #c2410c on #f0f0f1 (wp-admin body) = 4.55:1  (AA text, AA UI)
+     accent #c2410c on #fff (preview card)     = 5.18:1  (AA text, AA UI)
+     #fff label on #c2410c fill                = 5.18:1  (AA text)
+     dark accent #fb923c on #1d2327            = 7.02:1  (AA text, AA UI)
    ========================================================================== */
 
 .reorder-admin {
-    --reorder-accent: #2271b1;
+    --reorder-accent: #c2410c;
+    --reorder-accent-ink: #ffffff;
     --reorder-card-border: #dcdfe4;
+    --reorder-card-bg: #fff;
     --reorder-muted: #646970;
-    --reorder-tip-bg: #1e1e1e;
-    --reorder-tip-text: #fff;
+    --reorder-wash: color-mix(in srgb, var(--reorder-accent) 12%, transparent);
 
     max-inline-size: 60rem;
 }
@@ -31,10 +41,14 @@
     margin-block-start: 0.5em;
 }
 
+/* One restrained distinctive touch: a short amber rule before each section
+   heading, tying the admin to the storefront button's accent. */
 .reorder-admin h2 {
     margin-block-start: 1.75em;
     padding-block-end: 0.4em;
+    padding-inline-start: 0.7em;
     border-block-end: 1px solid var(--reorder-card-border);
+    border-inline-start: 3px solid var(--reorder-accent);
     font-size: 1.05rem;
 }
 
@@ -55,88 +69,97 @@
     margin-block-end: 0;
 }
 
-/* ── Inline help tooltip ("?" affordance) ─────────────────────────────── */
+/* ── Live preview ─────────────────────────────────────────────────────────
+   Shows the merchant the actual storefront button their customers will see,
+   so "Button text" and "After reordering" stop being abstract. The button is
+   drawn from the same tokens the storefront uses (refill-loop glyph + amber
+   wash) so what they see here is what ships. */
 
-.reorder-help {
+.reorder-preview {
+    margin-block: 0.6em 0;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--reorder-card-border);
+    border-radius: 8px;
+    background: var(--reorder-card-bg);
+}
+
+.reorder-preview__label {
+    margin: 0 0 0.7rem;
+    color: var(--reorder-muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* The button itself: a faithful copy of the storefront's .reorder treatment,
+   re-scoped to the preview so it renders the same loop glyph + amber here. */
+.reorder-preview__button {
+    --reorder-loop: 1.05em;
+    --reorder-loop-gap: 0.55em;
+
     position: relative;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    inline-size: 1.15rem;
-    block-size: 1.15rem;
-    margin-inline-start: 0.4rem;
-    padding: 0;
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    background: transparent;
+    padding-block: 0.5em;
+    padding-inline: calc(1em + var(--reorder-loop) + var(--reorder-loop-gap)) 1em;
+    border: 1px solid var(--reorder-accent);
+    border-radius: 4px;
+    background: var(--reorder-wash);
     color: var(--reorder-accent);
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 1;
-    cursor: help;
-    vertical-align: middle;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
 }
 
-.reorder-help:focus-visible {
-    outline: 2px solid var(--reorder-accent);
-    outline-offset: 2px;
-}
-
-.reorder-help__bubble {
-    position: absolute;
-    inset-block-end: calc(100% + 8px);
-    inset-inline-start: 50%;
-    z-index: 20;
-    inline-size: max-content;
-    max-inline-size: 18rem;
-    transform: translateX(-50%);
-    padding: 0.55rem 0.7rem;
-    border-radius: 6px;
-    background: var(--reorder-tip-bg);
-    color: var(--reorder-tip-text);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.45;
-    text-align: start;
-    white-space: normal;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-.reorder-help__bubble::after {
+.reorder-preview__button::before {
     content: "";
     position: absolute;
-    inset-block-start: 100%;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-block-start-color: var(--reorder-tip-bg);
+    inset-block-start: 50%;
+    inset-inline-start: 1em;
+    inline-size: var(--reorder-loop);
+    block-size: var(--reorder-loop);
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background:
+        conic-gradient(
+            from 18deg,
+            var(--reorder-accent) 0deg 300deg,
+            transparent 300deg 360deg
+        );
+    -webkit-mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 2.5px),
+        #000 calc(100% - 2px)
+    );
+            mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 2.5px),
+        #000 calc(100% - 2px)
+    );
 }
 
-.reorder-help:hover .reorder-help__bubble,
-.reorder-help:focus-visible .reorder-help__bubble,
-.reorder-help[aria-expanded="true"] .reorder-help__bubble {
-    opacity: 1;
-    visibility: visible;
+.reorder-preview__caption {
+    margin: 0.8rem 0 0;
+    color: var(--reorder-muted);
+    font-size: 12px;
+    line-height: 1.5;
 }
 
-/* ── Motion ───────────────────────────────────────────────────────────── */
-
-@media (prefers-reduced-motion: no-preference) {
-    .reorder-help__bubble {
-        transition: opacity 0.14s ease, visibility 0.14s ease;
-    }
+.reorder-preview__caption strong {
+    color: inherit;
+    font-weight: 600;
 }
 
 /* ── Dark mode ────────────────────────────────────────────────────────── */
 
 @media (prefers-color-scheme: dark) {
     .reorder-admin {
+        --reorder-accent: #fb923c;
+        --reorder-accent-ink: #1a1206;
         --reorder-card-border: #3c434a;
+        --reorder-card-bg: #2c3338;
         --reorder-muted: #a7aaad;
-        --reorder-tip-bg: #e2e4e7;
-        --reorder-tip-text: #1d2327;
+        --reorder-wash: color-mix(in srgb, var(--reorder-accent) 18%, transparent);
     }
 }
