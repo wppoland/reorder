@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Reorder – Storefront
+   The "Order again" action in My Account → Orders. Among a row of one-item
+   glances (View, Pay, Cancel), this is the one that gathers a whole order
+   back up — so it carries Reorder's own mark: a refill loop that closes on
+   intent, and a warm amber fill that tops the basket back up behind the label.
+
+   A polite guest: inherits the theme's button geometry (font, radius, size)
+   and only spends its accent on the one moment that matters. CSS only — the
+   plugin's "no front-end JavaScript" promise holds. Themeable via --reorder-*
+   tokens, dark-scheme aware, motion-safe, and zero layout shift (the glyph's
+   track is always reserved).
+   ========================================================================== */
+
+.woocommerce-button.button.reorder,
+a.button.reorder {
+    /* Reorder's own world: the cycle, the "the usual" order returned to.
+       Burnt amber — distinct from the admin's WP blue and from sibling
+       plugins — reading as a worn-in, come-back-to favourite. Falls back to
+       the theme's own button colour where a token is unset. */
+    --reorder-accent: #c2410c;
+    --reorder-accent-ink: #ffffff;
+    --reorder-wash: color-mix(in srgb, var(--reorder-accent) 14%, transparent);
+    --reorder-loop: 1.05em;          /* diameter of the refill-loop glyph */
+    --reorder-loop-gap: 0.55em;      /* reserved space between glyph + label */
+    --reorder-ring: color-mix(in srgb, var(--reorder-accent) 38%, transparent);
+
+    position: relative;
+    /* Reserve the glyph track up front so nothing reflows on hover. */
+    padding-inline-start: calc(1em + var(--reorder-loop) + var(--reorder-loop-gap));
+    border-color: var(--reorder-accent);
+    color: var(--reorder-accent);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* The refill wash: a warm fill that sweeps in from the start edge behind the
+   label — the basket topping back up. Sits under the text + glyph (z-index). */
+.woocommerce-button.button.reorder::after,
+a.button.reorder::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: var(--reorder-wash);
+}
+
+/* The refill loop: a circular-arrow ring drawn in CSS, no glyph font, no SVG
+   request. A conic sweep clipped to a ring, with a small arrowhead notch. It
+   closes the loop (spins a full turn) the moment the shopper means it. */
+.woocommerce-button.button.reorder::before,
+a.button.reorder::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 1em;
+    inline-size: var(--reorder-loop);
+    block-size: var(--reorder-loop);
+    transform: translateY(-50%);
+    border-radius: 50%;
+    /* The loop body: ~300° of accent, with a gap that reads as the arrow's
+       open mouth. Masked into a thin ring so it's a stroke, not a disc. */
+    background:
+        conic-gradient(
+            from 18deg,
+            var(--reorder-accent) 0deg 300deg,
+            transparent 300deg 360deg
+        );
+    -webkit-mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 2.5px),
+        #000 calc(100% - 2px)
+    );
+            mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 2.5px),
+        #000 calc(100% - 2px)
+    );
+}
+
+/* Hover / focus / active = intent. The loop closes (one full turn), the wash
+   tops up, and the label flips to ink-on-amber. The whole order, gathered. */
+.woocommerce-button.button.reorder:hover,
+.woocommerce-button.button.reorder:focus-visible,
+.woocommerce-button.button.reorder:active,
+a.button.reorder:hover,
+a.button.reorder:focus-visible,
+a.button.reorder:active {
+    background-color: var(--reorder-accent);
+    border-color: var(--reorder-accent);
+    color: var(--reorder-accent-ink);
+}
+
+.woocommerce-button.button.reorder:hover::after,
+.woocommerce-button.button.reorder:focus-visible::after,
+.woocommerce-button.button.reorder:active::after,
+a.button.reorder:hover::after,
+a.button.reorder:focus-visible::after,
+a.button.reorder:active::after {
+    transform: scaleX(1);
+}
+
+/* On the accent fill, the loop inverts to ink so it stays legible. */
+.woocommerce-button.button.reorder:hover::before,
+.woocommerce-button.button.reorder:focus-visible::before,
+.woocommerce-button.button.reorder:active::before,
+a.button.reorder:hover::before,
+a.button.reorder:focus-visible::before,
+a.button.reorder:active::before {
+    background:
+        conic-gradient(
+            from 18deg,
+            var(--reorder-accent-ink) 0deg 300deg,
+            transparent 300deg 360deg
+        );
+}
+
+/* Visible, on-brand keyboard focus — never rely on the theme's default. */
+.woocommerce-button.button.reorder:focus-visible,
+a.button.reorder:focus-visible {
+    outline: 2px solid var(--reorder-ring);
+    outline-offset: 2px;
+}
+
+/* ── Motion: the one earned micro-interaction ─────────────────────────────
+   The loop closes — a single, deliberate full turn — only when the shopper
+   reaches for it, and only when motion is welcome. The wash eases in with it. */
+@media (prefers-reduced-motion: no-preference) {
+    .woocommerce-button.button.reorder::before,
+    a.button.reorder::before {
+        transition: background 0.2s ease;
+    }
+
+    .woocommerce-button.button.reorder::after,
+    a.button.reorder::after {
+        transition: transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .woocommerce-button.button.reorder:hover::before,
+    .woocommerce-button.button.reorder:focus-visible::before,
+    a.button.reorder:hover::before,
+    a.button.reorder:focus-visible::before {
+        animation: reorder-loop-close 0.55s cubic-bezier(0.5, 0, 0.2, 1);
+    }
+}
+
+@keyframes reorder-loop-close {
+    from { transform: translateY(-50%) rotate(0); }
+    to   { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* ── Dark scheme ──────────────────────────────────────────────────────────
+   Warm the amber up a touch so it carries on dark account pages. */
+@media (prefers-color-scheme: dark) {
+    .woocommerce-button.button.reorder,
+    a.button.reorder {
+        --reorder-accent: #fb923c;
+        --reorder-accent-ink: #1a1206;
+        --reorder-wash: color-mix(in srgb, var(--reorder-accent) 20%, transparent);
+    }
+}

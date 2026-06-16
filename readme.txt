@@ -23,7 +23,7 @@ What the plugin does:
 * Keeps the original variation — if they bought the medium in blue, that's the variation that comes back.
 * Checks the nonce on every reorder link and confirms the logged-in customer owns the order before touching the cart, so one customer can't reorder another's order.
 * Skips unavailable products with a notice rather than leaving the customer with a broken or half-filled cart.
-* Adds no front-end JavaScript and no extra markup. The button is a normal WooCommerce order action, so it won't shift your account-page layout.
+* Adds no front-end JavaScript and no extra markup. The button is a normal WooCommerce order action with a small, themeable stylesheet (loaded only on the orders page), so it stands out without shifting your account-page layout.
 
 Settings live under **WooCommerce → Reorder**: change the button label, pick which order statuses get the button (Completed, Processing, On hold), and decide whether reordering lands on the cart or the checkout.
 

@@ -16,6 +16,7 @@ use Reorder\Admin\Assets;
 use Reorder\Admin\Settings;
 use Reorder\Service\ReorderService;
 use Reorder\Settings\SettingsRepository;
+use Reorder\Storefront\Assets as StorefrontAssets;
 
 return static function (Container $c): void {
     // Infrastructure.
@@ -26,6 +27,11 @@ return static function (Container $c): void {
     $c->singleton(ReorderService::class, static fn (): ReorderService => new ReorderService(
         $c->get(SettingsRepository::class),
     ));
+
+    // Storefront (only outside wp-admin: the My Account → Orders button styling).
+    if (! is_admin()) {
+        $c->singleton(StorefrontAssets::class, static fn (): StorefrontAssets => new StorefrontAssets());
+    }
 
     // Admin (only loaded in wp-admin context).
     if (is_admin()) {

@@ -16,6 +16,7 @@ defined('ABSPATH') || exit;
 use Reorder\Admin\Assets;
 use Reorder\Admin\Settings;
 use Reorder\Service\ReorderService;
+use Reorder\Storefront\Assets as StorefrontAssets;
 
 return is_admin()
     ? [
@@ -25,4 +26,5 @@ return is_admin()
     ]
     : [
         ReorderService::class,
+        StorefrontAssets::class,
     ];
