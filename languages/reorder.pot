@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-14T21:56:02+00:00\n"
+"POT-Creation-Date: 2026-06-16T20:23:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: reorder\n"
@@ -68,56 +68,83 @@ msgid "Settings"
 msgstr ""
 
 #: src/Admin/Settings.php:85
-msgid "General"
+msgid "The button"
 msgstr ""
 
-#: src/Admin/Settings.php:92
+#: src/Admin/Settings.php:87
+msgid "Set what the reorder button says and where it takes the customer. The preview shows exactly what they will see in My Account."
+msgstr ""
+
+#: src/Admin/Settings.php:94
 msgid "Button text"
 msgstr ""
 
-#: src/Admin/Settings.php:98
+#: src/Admin/Settings.php:100
+#: src/Admin/Settings.php:270
 #: src/Settings/SettingsRepository.php:58
 msgid "Order again"
 msgstr ""
 
-#: src/Admin/Settings.php:99
+#: src/Admin/Settings.php:101
 msgid "Label shown on the reorder button in My Account. An action phrase such as \"Order again\" or \"Buy these again\" works well. Leave blank to use the default."
 msgstr ""
 
-#: src/Admin/Settings.php:105
+#: src/Admin/Settings.php:107
 msgid "After reordering"
 msgstr ""
 
-#: src/Admin/Settings.php:111
+#: src/Admin/Settings.php:113
 msgid "Where to send the customer once their items are back in the cart. Send straight to checkout for the fastest repeat purchase, or to the cart so they can review and adjust first."
 msgstr ""
 
-#: src/Admin/Settings.php:118
+#: src/Admin/Settings.php:119
+msgid "Preview"
+msgstr ""
+
+#: src/Admin/Settings.php:129
 msgid "Where it appears"
 msgstr ""
 
-#: src/Admin/Settings.php:120
+#: src/Admin/Settings.php:131
 msgid "Choose which past orders show a reorder button."
 msgstr ""
 
-#: src/Admin/Settings.php:127
+#: src/Admin/Settings.php:138
 msgid "Order statuses"
 msgstr ""
 
-#: src/Admin/Settings.php:133
+#: src/Admin/Settings.php:144
 msgid "The button only appears on orders with one of the ticked statuses. \"Completed\" is the usual choice; add \"Processing\" if you want customers to reorder before fulfilment."
 msgstr ""
 
-#: src/Admin/Settings.php:147
+#: src/Admin/Settings.php:158
 msgid "Add a one-click reorder button to past orders so customers can buy the same items again in seconds."
 msgstr ""
 
-#: src/Admin/Settings.php:201
+#: src/Admin/Settings.php:212
 msgid "Go to the cart"
 msgstr ""
 
-#: src/Admin/Settings.php:202
+#: src/Admin/Settings.php:213
 msgid "Go straight to checkout"
+msgstr ""
+
+#: src/Admin/Settings.php:264
+msgid "the cart"
+msgstr ""
+
+#: src/Admin/Settings.php:265
+msgid "checkout"
+msgstr ""
+
+#: src/Admin/Settings.php:277
+msgid "In My Account → Orders"
+msgstr ""
+
+#. translators: %s: the cart or checkout destination, e.g. "the cart".
+#: src/Admin/Settings.php:287
+#, php-format
+msgid "After clicking, the order is re-added and the customer is taken to %s."
 msgstr ""
 
 #: src/Service/ReorderService.php:77
@@ -133,7 +160,7 @@ msgid "The cart is not available right now. Please try again."
 msgstr ""
 
 #. translators: %d: number of items added back to the cart.
-#: src/Service/ReorderService.php:171
+#: src/Service/ReorderService.php:183
 #, php-format
 msgid "%d item from your order was added back to the cart."
 msgid_plural "%d items from your order were added back to the cart."
@@ -141,11 +168,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: comma-separated list of product names that could not be re-added.
-#: src/Service/ReorderService.php:182
+#: src/Service/ReorderService.php:194
 #, php-format
 msgid "These items are no longer available and were skipped: %s"
 msgstr ""
 
-#: src/Service/ReorderService.php:190
+#: src/Service/ReorderService.php:202
 msgid "There was nothing from that order to add to the cart."
 msgstr ""
