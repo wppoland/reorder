@@ -9,28 +9,25 @@ Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-One-click reorder for WooCommerce: add a Buy again button to past orders so customers re-add still-purchasable items and check out fast.
+Adds an "Order again" button to past WooCommerce orders. One click re-adds the still-available items to the cart and sends the customer onward.
 
 == Description ==
 
-Reorder adds a one-click **"Order again"** button to each past order in WooCommerce **My Account → Orders**. Clicking it re-adds every still-purchasable item from that order to the cart and sends the customer to the cart or straight to checkout — turning a repeat purchase into a single tap.
+Reorder adds an **"Order again"** button to each past order in WooCommerce **My Account → Orders**. When a customer clicks it, every still-purchasable item from that order goes back into the cart, and they land on the cart page or the checkout — whichever you've chosen in the settings.
 
-Anything no longer available (deleted, hidden, or out of stock) is skipped automatically, and the customer gets a clear notice listing what could not be re-added.
+Items that are gone (deleted, hidden, or out of stock) are left out, and the customer sees a notice naming what couldn't be added so there are no silent surprises in the cart.
 
-**Why Reorder?**
+What the plugin does:
 
-* **Fast repeat purchases.** Customers re-buy a whole order without hunting for each product again.
-* **Safe by design.** Every reorder link is nonce-protected, and the handler verifies the current user actually owns the order before acting — no IDOR, no acting on someone else's order.
-* **Graceful with missing items.** Unavailable products are skipped with a friendly notice instead of breaking the cart.
-* **Variation aware.** Re-adds the exact variation (size, colour, etc.) that was originally ordered.
-* **No layout shift, no jQuery.** The button sits in the normal WooCommerce order actions.
-* **Configurable.** Choose the button label, which order statuses show the button, and whether to send shoppers to the cart or checkout.
+* Re-adds a whole order's worth of products in one click, instead of the customer searching for each item again.
+* Keeps the original variation — if they bought the medium in blue, that's the variation that comes back.
+* Checks the nonce on every reorder link and confirms the logged-in customer owns the order before touching the cart, so one customer can't reorder another's order.
+* Skips unavailable products with a notice rather than leaving the customer with a broken or half-filled cart.
+* Adds no front-end JavaScript and no extra markup. The button is a normal WooCommerce order action, so it won't shift your account-page layout.
 
-**Settings (WooCommerce → Reorder)**
+Settings live under **WooCommerce → Reorder**: change the button label, pick which order statuses get the button (Completed, Processing, On hold), and decide whether reordering lands on the cart or the checkout.
 
-* Button text
-* Which order statuses show the button (Completed, Processing, On hold)
-* Redirect target after reordering (cart or checkout)
+Source and bug reports live on GitHub at https://github.com/wppoland/reorder — issues and patches welcome.
 
 == Installation ==
 
