@@ -82,8 +82,10 @@ final class Settings implements HasHooks
         // ── General ──────────────────────────────────────────────────────────
         add_settings_section(
             self::SECTION_GENERAL,
-            __('General', 'reorder'),
-            '__return_false',
+            __('The button', 'reorder'),
+            static function (): void {
+                echo '<p>' . esc_html__('Set what the reorder button says and where it takes the customer. The preview shows exactly what they will see in My Account.', 'reorder') . '</p>';
+            },
             self::PAGE,
         );
 
@@ -110,6 +112,15 @@ final class Settings implements HasHooks
                 'id'   => 'redirect',
                 'help' => __('Where to send the customer once their items are back in the cart. Send straight to checkout for the fastest repeat purchase, or to the cart so they can review and adjust first.', 'reorder'),
             ],
+        );
+
+        add_settings_field(
+            'preview',
+            __('Preview', 'reorder'),
+            [$this, 'renderPreview'],
+            self::PAGE,
+            self::SECTION_GENERAL,
+            ['id' => 'preview'],
         );
 
         // ── Display ──────────────────────────────────────────────────────────
@@ -240,6 +251,49 @@ final class Settings implements HasHooks
         }
         echo '</fieldset>';
         echo $this->helpText($args['help'] ?? ''); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Pre-escaped by helpText().
+    }
+
+    /**
+     * Renders a live preview of the storefront reorder button, reflecting the
+     * current label and redirect target. JS keeps it in sync as the merchant
+     * edits; without JS it still renders the saved state correctly.
+     */
+    public function renderPreview(): void
+    {
+        $label         = $this->settings->buttonText();
+        $cartLabel     = __('the cart', 'reorder');
+        $checkoutLabel = __('checkout', 'reorder');
+        $destination   = $this->settings->redirect() === 'checkout' ? $checkoutLabel : $cartLabel;
+
+        printf(
+            '<div class="reorder-preview" data-fallback-label="%1$s" data-cart-label="%2$s" data-checkout-label="%3$s">',
+            esc_attr(__('Order again', 'reorder')),
+            esc_attr($cartLabel),
+            esc_attr($checkoutLabel),
+        );
+
+        printf(
+            '<p class="reorder-preview__label">%s</p>',
+            esc_html__('In My Account → Orders', 'reorder'),
+        );
+
+        printf(
+            '<span class="reorder-preview__button"><span class="reorder-preview__button-label">%s</span></span>',
+            esc_html($label),
+        );
+
+        $caption = sprintf(
+            /* translators: %s: the cart or checkout destination, e.g. "the cart". */
+            esc_html__('After clicking, the order is re-added and the customer is taken to %s.', 'reorder'),
+            sprintf('<strong class="reorder-preview__dest">%s</strong>', esc_html($destination)),
+        );
+
+        printf(
+            '<p class="reorder-preview__caption">%s</p>',
+            wp_kses_post($caption),
+        );
+
+        echo '</div>';
     }
 
     /**

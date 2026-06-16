@@ -39,5 +39,13 @@ final class Assets implements HasHooks
             [],
             \Reorder\VERSION,
         );
+
+        wp_enqueue_script(
+            self::HANDLE,
+            $plugin->url('assets/js/admin.js'),
+            [],
+            \Reorder\VERSION,
+            true,
+        );
     }
 }
