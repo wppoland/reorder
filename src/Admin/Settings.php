@@ -96,6 +96,7 @@ final class Settings implements HasHooks
             self::PAGE,
             self::SECTION_GENERAL,
             [
+                'label_for'   => 'button_text',
                 'id'          => 'button_text',
                 'placeholder' => __('Order again', 'reorder'),
                 'help'        => __('Label shown on the reorder button in My Account. An action phrase such as "Order again" or "Buy these again" works well. Leave blank to use the default.', 'reorder'),
