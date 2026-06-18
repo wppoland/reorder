@@ -1,5 +1,5 @@
 === Reorder - Quick Reorder for WooCommerce ===
-Contributors: wppoland
+Contributors: motylanogha
 Tags: woocommerce, reorder, buy again, repeat order, order again
 Requires at least: 6.5
 Tested up to: 7.0
