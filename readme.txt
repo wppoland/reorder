@@ -39,6 +39,15 @@ Source and bug reports live on GitHub at https://github.com/wppoland/reorder —
 
 == Frequently Asked Questions ==
 
+= Documentation and links =
+
+* **Documentation** - https://plogins.com/reorder/docs/
+* **Plugin page** - https://plogins.com/reorder/
+* **Source code** - https://github.com/wppoland/reorder
+* **Bug reports and feature requests** - https://github.com/wppoland/reorder/issues
+* **Discussions and questions** - https://github.com/wppoland/reorder/discussions
+
+
 = Is Reorder free? =
 Yes. Reorder is free and licensed under the GPL.
 
