@@ -1,5 +1,5 @@
 === Reorder - Quick Reorder for WooCommerce ===
-Contributors: wppoland
+Contributors: motylanogha
 Tags: woocommerce, reorder, buy again, repeat order, order again
 Requires at least: 6.5
 Tested up to: 7.0
@@ -38,6 +38,15 @@ Source and bug reports live on GitHub at https://github.com/wppoland/reorder; is
 5. An "Order again" button now appears on qualifying past orders in **My Account → Orders**.
 
 == Frequently Asked Questions ==
+
+= Documentation and links =
+
+* **Documentation** - https://plogins.com/reorder/docs/
+* **Plugin page** - https://plogins.com/reorder/
+* **Source code** - https://github.com/wppoland/reorder
+* **Bug reports and feature requests** - https://github.com/wppoland/reorder/issues
+* **Discussions and questions** - https://github.com/wppoland/reorder/discussions
+
 
 = Is Reorder free? =
 Yes. Reorder is free and licensed under the GPL.
