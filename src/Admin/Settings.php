@@ -39,8 +39,8 @@ final class Settings implements HasHooks
     {
         add_submenu_page(
             'woocommerce',
-            __('Reorder Settings', 'reorder'),
-            __('Reorder', 'reorder'),
+            __('Reorder Settings', 'plogins-reorder'),
+            __('Reorder', 'plogins-reorder'),
             'manage_woocommerce',
             self::PAGE,
             [$this, 'renderPage'],
@@ -60,7 +60,7 @@ final class Settings implements HasHooks
         $settingsLink = sprintf(
             '<a href="%s">%s</a>',
             esc_url($url),
-            esc_html__('Settings', 'reorder'),
+            esc_html__('Settings', 'plogins-reorder'),
         );
 
         array_unshift($links, $settingsLink);
@@ -82,42 +82,42 @@ final class Settings implements HasHooks
         // ── General ──────────────────────────────────────────────────────────
         add_settings_section(
             self::SECTION_GENERAL,
-            __('The button', 'reorder'),
+            __('The button', 'plogins-reorder'),
             static function (): void {
-                echo '<p>' . esc_html__('Set what the reorder button says and where it takes the customer. The preview shows exactly what they will see in My Account.', 'reorder') . '</p>';
+                echo '<p>' . esc_html__('Set what the reorder button says and where it takes the customer. The preview shows exactly what they will see in My Account.', 'plogins-reorder') . '</p>';
             },
             self::PAGE,
         );
 
         add_settings_field(
             'button_text',
-            __('Button text', 'reorder'),
+            __('Button text', 'plogins-reorder'),
             [$this, 'renderText'],
             self::PAGE,
             self::SECTION_GENERAL,
             [
                 'label_for'   => 'button_text',
                 'id'          => 'button_text',
-                'placeholder' => __('Order again', 'reorder'),
-                'help'        => __('Label shown on the reorder button in My Account. An action phrase such as "Order again" or "Buy these again" works well. Leave blank to use the default.', 'reorder'),
+                'placeholder' => __('Order again', 'plogins-reorder'),
+                'help'        => __('Label shown on the reorder button in My Account. An action phrase such as "Order again" or "Buy these again" works well. Leave blank to use the default.', 'plogins-reorder'),
             ],
         );
 
         add_settings_field(
             'redirect',
-            __('After reordering', 'reorder'),
+            __('After reordering', 'plogins-reorder'),
             [$this, 'renderRedirect'],
             self::PAGE,
             self::SECTION_GENERAL,
             [
                 'id'   => 'redirect',
-                'help' => __('Where to send the customer once their items are back in the cart. Send straight to checkout for the fastest repeat purchase, or to the cart so they can review and adjust first.', 'reorder'),
+                'help' => __('Where to send the customer once their items are back in the cart. Send straight to checkout for the fastest repeat purchase, or to the cart so they can review and adjust first.', 'plogins-reorder'),
             ],
         );
 
         add_settings_field(
             'preview',
-            __('Preview', 'reorder'),
+            __('Preview', 'plogins-reorder'),
             [$this, 'renderPreview'],
             self::PAGE,
             self::SECTION_GENERAL,
@@ -127,22 +127,22 @@ final class Settings implements HasHooks
         // ── Display ──────────────────────────────────────────────────────────
         add_settings_section(
             self::SECTION_DISPLAY,
-            __('Where it appears', 'reorder'),
+            __('Where it appears', 'plogins-reorder'),
             static function (): void {
-                echo '<p>' . esc_html__('Choose which past orders show a reorder button.', 'reorder') . '</p>';
+                echo '<p>' . esc_html__('Choose which past orders show a reorder button.', 'plogins-reorder') . '</p>';
             },
             self::PAGE,
         );
 
         add_settings_field(
             'statuses',
-            __('Order statuses', 'reorder'),
+            __('Order statuses', 'plogins-reorder'),
             [$this, 'renderStatuses'],
             self::PAGE,
             self::SECTION_DISPLAY,
             [
                 'id'   => 'statuses',
-                'help' => __('The button only appears on orders with one of the ticked statuses. "Completed" is the usual choice; add "Processing" if you want customers to reorder before fulfilment.', 'reorder'),
+                'help' => __('The button only appears on orders with one of the ticked statuses. "Completed" is the usual choice; add "Processing" if you want customers to reorder before fulfilment.', 'plogins-reorder'),
             ],
         );
     }
@@ -156,7 +156,7 @@ final class Settings implements HasHooks
         <div class="wrap reorder-admin">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
             <p class="reorder-admin__lead">
-                <?php esc_html_e('Add a one-click reorder button to past orders so customers can buy the same items again in seconds.', 'reorder'); ?>
+                <?php esc_html_e('Add a one-click reorder button to past orders so customers can buy the same items again in seconds.', 'plogins-reorder'); ?>
             </p>
             <form method="post" action="options.php">
                 <?php
@@ -210,8 +210,8 @@ final class Settings implements HasHooks
         $id      = $args['id'] ?? 'redirect';
         $current = $this->settings->redirect();
         $choices = [
-            'cart'     => __('Go to the cart', 'reorder'),
-            'checkout' => __('Go straight to checkout', 'reorder'),
+            'cart'     => __('Go to the cart', 'plogins-reorder'),
+            'checkout' => __('Go straight to checkout', 'plogins-reorder'),
         ];
 
         echo '<fieldset>';
@@ -262,20 +262,20 @@ final class Settings implements HasHooks
     public function renderPreview(): void
     {
         $label         = $this->settings->buttonText();
-        $cartLabel     = __('the cart', 'reorder');
-        $checkoutLabel = __('checkout', 'reorder');
+        $cartLabel     = __('the cart', 'plogins-reorder');
+        $checkoutLabel = __('checkout', 'plogins-reorder');
         $destination   = $this->settings->redirect() === 'checkout' ? $checkoutLabel : $cartLabel;
 
         printf(
             '<div class="reorder-preview" data-fallback-label="%1$s" data-cart-label="%2$s" data-checkout-label="%3$s">',
-            esc_attr(__('Order again', 'reorder')),
+            esc_attr(__('Order again', 'plogins-reorder')),
             esc_attr($cartLabel),
             esc_attr($checkoutLabel),
         );
 
         printf(
             '<p class="reorder-preview__label">%s</p>',
-            esc_html__('In My Account → Orders', 'reorder'),
+            esc_html__('In My Account → Orders', 'plogins-reorder'),
         );
 
         printf(
@@ -285,7 +285,7 @@ final class Settings implements HasHooks
 
         $caption = sprintf(
             /* translators: %s: the cart or checkout destination, e.g. "the cart". */
-            esc_html__('After clicking, the order is re-added and the customer is taken to %s.', 'reorder'),
+            esc_html__('After clicking, the order is re-added and the customer is taken to %s.', 'plogins-reorder'),
             sprintf('<strong class="reorder-preview__dest">%s</strong>', esc_html($destination)),
         );
 

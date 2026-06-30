@@ -1,11 +1,11 @@
-=== Reorder - Quick Reorder for WooCommerce ===
+=== Plogins Reorder for WooCommerce ===
 Contributors: motylanogha
 Tags: woocommerce, reorder, buy again, repeat order, order again
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,7 +27,7 @@ What the plugin does:
 
 Settings live under **WooCommerce → Reorder**: change the button label, pick which order statuses get the button (Completed, Processing, On hold), and decide whether reordering lands on the cart or the checkout.
 
-Source and bug reports live on GitHub at https://github.com/wppoland/reorder; issues and patches welcome.
+Source and bug reports live on GitHub at https://github.com/wppoland/plogins-reorder; issues and patches welcome.
 
 == Installation ==
 
@@ -41,11 +41,10 @@ Source and bug reports live on GitHub at https://github.com/wppoland/reorder; is
 
 = Documentation and links =
 
-* **Documentation** - https://plogins.com/reorder/docs/
-* **Plugin page** - https://plogins.com/reorder/
-* **Source code** - https://github.com/wppoland/reorder
-* **Bug reports and feature requests** - https://github.com/wppoland/reorder/issues
-* **Discussions and questions** - https://github.com/wppoland/reorder/discussions
+* **Documentation** - https://plogins.com/plogins-reorder/docs/
+* **Plugin page** - https://plogins.com/plogins-reorder/
+* **Source code** - https://github.com/wppoland/plogins-reorder
+* **Bug reports and feature requests** - https://github.com/wppoland/plogins-reorder/issues
 
 
 = Is Reorder free? =
@@ -79,6 +78,9 @@ Reorder does not connect to any external services. It only re-adds items to the 
 2. Settings page: button text, order statuses, and redirect target.
 
 == Changelog ==
+
+= 0.1.1 =
+* Renamed to Plogins Reorder for WooCommerce for a more distinctive plugin name.
 
 = 0.1.0 =
 * Initial release: one-click reorder button on past orders, ownership-checked and nonce-protected, with configurable label, statuses, and redirect target.

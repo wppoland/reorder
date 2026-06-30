@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 /**
- * Plugin Name:       Reorder - Quick Reorder for WooCommerce
- * Plugin URI:        https://plogins.com/reorder/
+ * Plugin Name:       Plogins Reorder for WooCommerce
+ * Plugin URI:        https://plogins.com/plogins-reorder/
  * Description:        Add a one-click reorder button to past orders so customers can re-add every still-purchasable item to the cart and buy again fast.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Tested up to:      7.0
@@ -14,7 +14,7 @@ declare(strict_types=1);
  * Author URI:        https://wppoland.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       reorder
+ * Text Domain:       plogins-reorder
  * Domain Path:       /languages
  * Requires Plugins:  woocommerce
  *
@@ -28,7 +28,7 @@ namespace Reorder;
 
 defined('ABSPATH') || exit;
 
-const VERSION         = '0.1.0';
+const VERSION         = '0.1.1';
 const PLUGIN_FILE     = __FILE__;
 const PLUGIN_DIR      = __DIR__;
 const MIN_PHP_VERSION = '8.1.0';
@@ -53,7 +53,7 @@ if (version_compare(PHP_VERSION, MIN_PHP_VERSION, '<')) {
             '<div class="notice notice-error"><p>%s</p></div>',
             esc_html(sprintf(
                 /* translators: 1: Required PHP version, 2: Current PHP version */
-                __('Reorder requires PHP %1$s or higher. You are running PHP %2$s.', 'reorder'),
+                __('Reorder requires PHP %1$s or higher. You are running PHP %2$s.', 'plogins-reorder'),
                 MIN_PHP_VERSION,
                 PHP_VERSION,
             )),
@@ -72,7 +72,7 @@ add_action('plugins_loaded', static function (): void {
         add_action('admin_notices', static function (): void {
             printf(
                 '<div class="notice notice-error"><p>%s</p></div>',
-                esc_html__('Reorder requires WooCommerce to be installed and activated.', 'reorder'),
+                esc_html__('Reorder requires WooCommerce to be installed and activated.', 'plogins-reorder'),
             );
         });
         return;
@@ -84,7 +84,7 @@ add_action('plugins_loaded', static function (): void {
                 '<div class="notice notice-error"><p>%s</p></div>',
                 esc_html(sprintf(
                     /* translators: 1: Required WC version, 2: Current WC version */
-                    __('Reorder requires WooCommerce %1$s or higher. You are running WooCommerce %2$s.', 'reorder'),
+                    __('Reorder requires WooCommerce %1$s or higher. You are running WooCommerce %2$s.', 'plogins-reorder'),
                     MIN_WC_VERSION,
                     WC_VERSION,
                 )),

@@ -74,7 +74,7 @@ final class ReorderService implements HasHooks
         $nonce   = isset($_GET['_wpnonce']) ? sanitize_text_field(wp_unslash($_GET['_wpnonce'])) : '';
 
         if ($orderId <= 0 || ! wp_verify_nonce($nonce, self::ACTION . '_' . $orderId)) {
-            wc_add_notice(__('That reorder link has expired. Please try again.', 'reorder'), 'error');
+            wc_add_notice(__('That reorder link has expired. Please try again.', 'plogins-reorder'), 'error');
             $this->redirect(wc_get_account_endpoint_url('orders'));
         }
 
@@ -89,7 +89,7 @@ final class ReorderService implements HasHooks
             || $order->get_customer_id() !== get_current_user_id()
             || ! $this->orderQualifies($order)
         ) {
-            wc_add_notice(__('We could not find that order.', 'reorder'), 'error');
+            wc_add_notice(__('We could not find that order.', 'plogins-reorder'), 'error');
             $this->redirect(wc_get_account_endpoint_url('orders'));
         }
 
@@ -105,7 +105,7 @@ final class ReorderService implements HasHooks
     private function refill(WC_Order $order): void
     {
         if (! function_exists('WC') || WC()->cart === null) {
-            wc_add_notice(__('The cart is not available right now. Please try again.', 'reorder'), 'error');
+            wc_add_notice(__('The cart is not available right now. Please try again.', 'plogins-reorder'), 'error');
 
             return;
         }
@@ -180,7 +180,7 @@ final class ReorderService implements HasHooks
             wc_add_notice(
                 sprintf(
                     /* translators: %d: number of items added back to the cart. */
-                    _n('%d item from your order was added back to the cart.', '%d items from your order were added back to the cart.', $added, 'reorder'),
+                    _n('%d item from your order was added back to the cart.', '%d items from your order were added back to the cart.', $added, 'plogins-reorder'),
                     $added,
                 ),
                 'success',
@@ -191,7 +191,7 @@ final class ReorderService implements HasHooks
             wc_add_notice(
                 sprintf(
                     /* translators: %s: comma-separated list of product names that could not be re-added. */
-                    __('These items are no longer available and were skipped: %s', 'reorder'),
+                    __('These items are no longer available and were skipped: %s', 'plogins-reorder'),
                     implode(', ', array_map('sanitize_text_field', $skipped)),
                 ),
                 'notice',
@@ -199,7 +199,7 @@ final class ReorderService implements HasHooks
         }
 
         if ($added === 0 && $skipped === []) {
-            wc_add_notice(__('There was nothing from that order to add to the cart.', 'reorder'), 'notice');
+            wc_add_notice(__('There was nothing from that order to add to the cart.', 'plogins-reorder'), 'notice');
         }
     }
 

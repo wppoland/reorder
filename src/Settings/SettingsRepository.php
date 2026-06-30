@@ -55,7 +55,7 @@ final class SettingsRepository
     {
         $text = (string) ($this->all()['button_text'] ?? '');
 
-        return $text !== '' ? $text : __('Order again', 'reorder');
+        return $text !== '' ? $text : __('Order again', 'plogins-reorder');
     }
 
     /**
