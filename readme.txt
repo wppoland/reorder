@@ -68,6 +68,11 @@ To the cart by default, or straight to checkout, your choice in the settings.
 = How do I remove all plugin data? =
 Deleting the plugin from the **Plugins** screen runs the uninstall routine, which removes the `reorder_settings` and `reorder_db_version` options. Reorder stores no custom tables.
 
+
+= Does this plugin work on WordPress Multisite? =
+
+Yes. This plugin is compatible with WordPress Multisite. Network activate it or activate it on individual sites; each site keeps its own settings and data.
+
 == External Services ==
 
 Reorder does not connect to any external services. It only re-adds items to the standard WooCommerce cart on your own site.
