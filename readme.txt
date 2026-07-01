@@ -1,4 +1,4 @@
-=== Plogins Reorder for WooCommerce ===
+=== Plogins Reorder - One-Click Reorder for WooCommerce ===
 Contributors: motylanogha
 Tags: woocommerce, reorder, buy again, repeat order, order again
 Requires at least: 6.5
